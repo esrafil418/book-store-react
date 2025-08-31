@@ -91,6 +91,18 @@ const FilterSidebar = ({
           />
         </div>
       </div>
+      {/* !Reset button ---------------------------------------------------------*/}
+      <button
+        onClick={() => {
+          setSearchTerm("");
+          setSelectedGenres([]);
+          setPriceReng({ min: "", max: "" });
+          setYearRange({ min: "", max: "" });
+        }}
+        className="w-full mt-4 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition"
+      >
+        حذف تمام فیلترها
+      </button>
     </div>
   );
 };
