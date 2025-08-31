@@ -9,9 +9,11 @@ const Home = () => {
   // !for search Genres 👇
   const [selectedGenres, setSelectedGenres] = useState([]);
   // !for search Price 👇
-  const [priceRange, setPriceReng] = useState({ min: "", max: "" });
+  const [priceRange, setPriceRange] = useState({ min: "", max: "" });
   // !For year range 👇
   const [yearRange, setYearRange] = useState({ min: "", max: "" });
+  // !Sort 👇
+  const [sortOption, setSortOption] = useState("");
 
   const filteredBooks = books.filter((book) => {
     // !search 👇
@@ -32,19 +34,31 @@ const Home = () => {
     //  !returns ➡️
     return matchesSearch && matchesGenre && matchesPrice && matchesYear;
   });
+  // !Sort condition 👇
+  if (sortOption === "price-asc") {
+    filteredBooks.sort((a, b) => a.price - b.price);
+  } else if (sortOption === "price-desc") {
+    filteredBooks.sort((a, b) => b.price - a.price);
+  } else if (sortOption === "year-asc") {
+    filteredBooks.sort((a, b) => a.year - b.year);
+  } else if (sortOption === "year-desc") {
+    filteredBooks.sort((a, b) => b.year - a.year);
+  }
   return (
     <div className="p-6 grid grid-cols-1 md:grid-cols-4 gap-6">
       <div className="md:col-span-1">
-        {/* added all in here */}
+        {/* added all props ---------------- */}
         <FilterSidebar
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
           selectedGenres={selectedGenres}
           setSelectedGenres={setSelectedGenres}
           priceRange={priceRange}
-          setPriceReng={setPriceReng}
+          setPriceRange={setPriceRange}
           yearRange={yearRange}
           setYearRange={setYearRange}
+          sortOption={sortOption}
+          setSortOption={setSortOption}
         />
       </div>
 
