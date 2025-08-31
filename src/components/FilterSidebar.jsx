@@ -7,6 +7,8 @@ const FilterSidebar = ({
   setPriceRange,
   yearRange,
   setYearRange,
+  sortOption,
+  setSortOption,
 }) => {
   const genres = ["تاریخ/انسان شناسی", "سیاسی", "رمان", "فلسفه", "تاریخ"];
   const handleGenreChange = (genre) => {
@@ -103,6 +105,21 @@ const FilterSidebar = ({
       >
         حذف تمام فیلترها
       </button>
+      {/* !Sort -------------------------------------------- */}
+      <div className="mt-4">
+        <h3 className="font-semibold mb-2">مرتب سازی</h3>
+        <select
+          value={sortOption}
+          onChange={(e) => setSortOption(e.target.value)}
+          className="w-full border rounded-lg px-2 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        >
+          <option value="">-- انتخاب کنید --</option>
+          <option value="price-asc">قیمت: ارزان به گران</option>
+          <option value="price-desc">قیمت: گران به ارزان</option>
+          <option value="year-desc">سال انتشار: جدیدترین</option>
+          <option value="year-asc">سال انتشار: قدیمی‌ترین</option>
+        </select>
+      </div>
     </div>
   );
 };
