@@ -12,8 +12,11 @@ const Home = () => {
   const [priceRange, setPriceRange] = useState({ min: "", max: "" });
   // !For year range 👇
   const [yearRange, setYearRange] = useState({ min: "", max: "" });
-  // !Sort 👇
+  // !for Sort 👇
   const [sortOption, setSortOption] = useState("");
+  // !for Pagination 👇
+  const [currentPage, setCurrentPage] = useState(1);
+  const booksPerPage = 8;
 
   const filteredBooks = books.filter((book) => {
     // !search 👇
@@ -44,6 +47,12 @@ const Home = () => {
   } else if (sortOption === "year-desc") {
     filteredBooks.sort((a, b) => b.year - a.year);
   }
+  // !Pagination  👇
+  const indexOfLastBook = currentPage * booksPerPage;
+  const indexOfFirstBook = indexOfLastBook - booksPerPage;
+  const currentBooks = filteredBooks.slice(indexOfFirstBook, indexOfLastBook);
+  const totalPages = Math.ceil(filteredBooks.length / booksPerPage);
+
   return (
     <div className="p-6 grid grid-cols-1 md:grid-cols-4 gap-6">
       <div className="md:col-span-1">
@@ -62,14 +71,29 @@ const Home = () => {
         />
       </div>
 
+      {/* book list  */}
       <div className="md:col-span-3">
-        <h1 className="text-2xl font-bold mb-6">فروشگاه کتاب</h1>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {filteredBooks.length > 0 ? (
-            filteredBooks.map((book) => <BookCard key={book.id} book={book} />)
-          ) : (
-            <p className="text-gray-600">هیچ کتابی پیدا نشد</p>
-          )}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {currentBooks.map((book) => (
+            <BookCard key={book.id} book={book} />
+          ))}
+        </div>
+
+        {/* Pagination  */}
+        <div className="flex justify-center mt-6 space-x-2">
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i + 1}
+              onClick={() => setCurrentPage(i + 1)}
+              className={`px-3 py-1 rounded-lg ${
+                currentPage === i + 1
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-200 hover:bg-gray-300"
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
         </div>
       </div>
     </div>
